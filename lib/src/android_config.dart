@@ -68,5 +68,5 @@ class FlutterBackgroundAndroidConfig {
       this.notificationIcon =
           const AndroidResource(name: 'ic_launcher', defType: 'mipmap'),
       this.enableWifiLock = true,
-      this.showBadge = true});
+      this.showBadge = false});
 }

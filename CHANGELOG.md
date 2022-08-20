@@ -1,6 +1,10 @@
+## 1.2.0
+
+* Add option to hide notification badge
+
 ## 1.1.0
 
-* Add capability to enable Android Wifi Lock in the initialize function.
+* Add capability to enable Android Wifi Lock in the initialize function
 
 ## 1.0.2+2
 

@@ -5,7 +5,7 @@
 
 A plugin to keep flutter apps running in the background. Currently only works with Android.
 
-It achieves this functionality by running an [Android foreground service](https://developer.android.com/guide/components/foreground-services) in combination with a [partial wake lock](https://developer.android.com/training/scheduling/wakelock#cpu) and [disabling battery optimizations](https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases) in order to keep the flutter isolate running.
+It achieves this functionality by running an [Android foreground service](https://developer.android.com/guide/components/foreground-services) in combination with a [partial wake lock](https://developer.android.com/training/scheduling/wakelock#cpu) and [disabling battery optimizations](https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases) in order to keep the flutter isolate running. Disabling battery optimizations can be turned off.
 
 **Note:** This plugin currently only works with Android.
 PRs for iOS are very welcome, although I am not sure if a similiar effect can be achieved with iOS at all.
@@ -53,7 +53,9 @@ final androidConfig = FlutterBackgroundAndroidConfig(
     notificationTitle: "flutter_background example app",
     notificationText: "Background notification for keeping the example app running in the background",
     notificationImportance: AndroidNotificationImportance.Default,
-    notificationIcon: AndroidResource(name: 'background_icon', defType: 'drawable'), // Default is ic_launcher from folder mipmap
+    notificationIcon: AndroidResource(name: 'background_icon', defType: 'drawable',
+    enableWifiLock: true,
+    showBadge: true,), // Default is ic_launcher from folder mipmap
 );
 bool success = await FlutterBackground.initialize(androidConfig: androidConfig);
 ```
@@ -70,6 +72,7 @@ The arguments are:
 - `notificationImportance`: The importance of the foreground service notification.
 - `notificationIcon`: The icon used for the foreground service notification shown in the top left corner. This must be a drawable Android Resource (see [here](https://developer.android.com/reference/android/app/Notification.Builder#setSmallIcon(int,%20int)) for more). E. g. if the icon with name "background_icon" is in the "drawable" resource folder, it should be of value `AndroidResource(name: 'background_icon', defType: 'drawable').
 - `enableWifiLock`: Indicates whether or not a WifiLock is acquired when background execution is started. This allows the application to keep the Wi-Fi radio awake, even when the user has not used the device in a while (e.g. for background network communications).
+- `showBadge`: Indicates whether or not a notification badge of is shown on the app icon when the foreground service notification is active (see [here](https://developer.android.com/training/notify-user/badges) for more).
 
 In this example, `background_icon` is a drawable resource in the `drawable` folders (see the example app).
 For more information check out the [Android documentation for creating notification icons](https://developer.android.com/studio/write/image-asset-studio#create-notification) for more information how to create and store an icon.  
